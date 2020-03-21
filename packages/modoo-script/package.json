@@ -17,5 +17,6 @@
     "commander": "^5.0.0",
     "fs-extra": "^9.0.0",
     "inquirer": "^7.1.0"
-  }
+  },
+  "gitHead": "b30baefd9cc6a0d14668eb4860da415e8d220556"
 }
