@@ -15,6 +15,7 @@ class Init {
       },
       options
     );
+    console.log(3);
   }
   init() {
     console.log(chalk.green(`modoo-script 即将创建一个新项目!`));
