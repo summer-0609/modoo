@@ -1,0 +1,16 @@
+{
+  "name": "modoo-mini",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "script": "modoo-script init",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@modoo/modoo-script": "^1.0.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
