@@ -5,6 +5,8 @@
       "registry": "http://47.116.3.37:4873/"
     }
   },
-  "packages": ["packages/*"],
-  "version": "0.0.2"
+  "packages": [
+    "packages/*"
+  ],
+  "version": "0.0.3"
 }
