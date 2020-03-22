@@ -10,13 +10,18 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "xtmike008@gmail.com",
   "license": "ISC",
   "dependencies": {
     "chalk": "^3.0.0",
     "commander": "^5.0.0",
     "fs-extra": "^9.0.0",
-    "inquirer": "^7.1.0"
+    "got": "^10.6.0",
+    "inquirer": "^7.1.0",
+    "npmi": "^4.0.0",
+    "ora": "^4.0.3",
+    "package-json": "^6.5.0",
+    "tar": "^6.0.1"
   },
   "gitHead": "bc3d887656f9d3859aec10e36f241c36d5067c0f"
 }

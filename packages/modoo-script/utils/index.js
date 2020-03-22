@@ -1,4 +1,5 @@
 const os = require("os");
+const chalk = require("chalk");
 
 exports.getUserHomeDir = function() {
   function homedir() {
@@ -20,4 +21,14 @@ exports.getUserHomeDir = function() {
     return home || "";
   }
   return typeof os.homedir === "function" ? os.homedir() : homedir();
+};
+
+// 渲染二进制图
+exports.renderAscii = () => {
+  const ascii = fs.readFileSync(
+    path.resolve(__dirname, "../resource/ascii-modoojs.txt")
+  );
+  console.log("", null, false);
+  console.log(chalk.green(ascii), false);
+  console.log("", null, false);
 };

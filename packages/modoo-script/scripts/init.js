@@ -1,8 +1,13 @@
 const inquirer = require("inquirer");
 const fs = require("fs-extra");
+const chalk = require("chalk");
 
-const { getUserHomeDir } = require("../utils");
-const { miniPrompts } = require("../src/mini.js");
+const { miniPrompts, getBoilerplateMeta, createApp } = require("../src/mini");
+
+const getList = require("../utils/get-list");
+
+// 需要渲染的模版数据
+let template = {};
 
 class Init {
   constructor(options) {
@@ -15,7 +20,6 @@ class Init {
       },
       options
     );
-    console.log(3);
   }
   init() {
     console.log(chalk.green(`modoo-script 即将创建一个新项目!`));
@@ -27,10 +31,13 @@ class Init {
     console.log();
   }
   create() {
-    this.fetchTemplates();
-    // this.ask().then(answer => {
-    //   console.log(1, answer);
-    // });
+    // this.fetchTemplates();
+
+    this.ask().then(answers => {
+      this.conf = Object.assign(this.conf, answers);
+      this.write();
+      // console.log(1, answer);
+    });
   }
   ask() {
     const prompts = [];
@@ -38,6 +45,7 @@ class Init {
 
     this.askFrameWork(conf, prompts);
     this.askProjectName(conf, prompts);
+    this.askDescription(conf, prompts);
     this.askMini(prompts);
 
     this.askCSS(conf, prompts);
@@ -51,11 +59,24 @@ class Init {
         name: "framework",
         message: "请选择脚手架框架",
         // 暂时只有 微信原生小程序，之后加入 vue/react
-        choices: [{ name: "微信原生小程序", value: "mini" }]
+        choices: [
+          { name: "微信原生小程序", value: "mini" }
+          // { name: "react", value: "react" }
+        ]
       });
     }
   }
   askProjectName(conf, prompts) {
+    async function searchNpm(answers) {
+      const { framework } = answers;
+      console.log(
+        chalk.cyan(`正在寻找 ${framework} 远程模板仓库(请耐心等候)...`)
+      );
+      template = await getBoilerplateMeta(framework);
+      console.log(chalk.green("已成功找到模板仓库！"));
+      return true;
+    }
+
     if (typeof conf.projectName !== "string") {
       prompts.push({
         type: "input",
@@ -69,7 +90,8 @@ class Init {
             return "当前目录已经存在同名项目，请换一个项目名！";
           }
           return true;
-        }
+        },
+        when: answers => searchNpm(answers)
       });
     } else if (fs.existsSync(conf.projectName)) {
       prompts.push({
@@ -84,7 +106,17 @@ class Init {
             return "项目名依然重复！";
           }
           return true;
-        }
+        },
+        when: answers => searchNpm(answers)
+      });
+    }
+  }
+  askDescription(conf, prompts) {
+    if (typeof conf.description !== "string") {
+      prompts.push({
+        type: "input",
+        name: "description",
+        message: "请输入项目介绍:"
       });
     }
   }
@@ -92,47 +124,30 @@ class Init {
     prompts.push(...miniPrompts());
   }
   askCSS(conf, prompts) {
-    const cssChoices = [
-      {
-        name: "原生",
-        value: "wxss"
-      },
-      {
-        name: "Sass",
-        value: "sass"
-      },
-      {
-        name: "Less",
-        value: "less"
-      }
-    ];
-
     if (typeof conf.css !== "string") {
       prompts.push({
         type: "list",
         name: "css",
-        message: "请选择 CSS 预处理器 (sass/less/none): ",
-        choices: cssChoices
+        message: "请选择 CSS 处理器（Wxss/Sass/Less）",
+        choices: [
+          {
+            name: "Wxss",
+            value: "wxss"
+          },
+          {
+            name: "Sass",
+            value: "sass"
+          },
+          {
+            name: "Less",
+            value: "less"
+          }
+        ]
       });
     }
   }
-  // 下载其他模版源
-  fetchTemplates() {
-    const conf = this.conf;
-    // 使用默认模版
-    if (conf.template && conf.template === "default") {
-      return Promise.resolve([]);
-    }
-
-    //没有输入模版源
-    if (!conf.templateSource) {
-      const homedir = getUserHomeDir();
-      console.log(homedir);
-      if (!homedir) {
-        chalk.yellow("找不到用户根目录，使用默认模版源！");
-        // conf.templateSource = DEFAULT_TEMPLATE_SRC;
-      }
-    }
+  write() {
+    createApp(this.conf, template);
   }
 }
 
