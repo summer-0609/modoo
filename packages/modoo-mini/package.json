@@ -7,9 +7,11 @@
     "script": "modoo-script init",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@modoo/modoo-script": "^0.0.3"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "gitHead": "bc3d887656f9d3859aec10e36f241c36d5067c0f"
+  "gitHead": "a9786a7d48e3e79683a30b5a71b3e15386a94429"
 }
