@@ -32,3 +32,9 @@ exports.renderAscii = () => {
   console.log(chalk.green(ascii), false);
   console.log("", null, false);
 };
+
+exports.template = (content = "", inject) => {
+  return content.replace(/@{([^}]+)}/gi, (m, key) => {
+    return inject[key.trim()];
+  });
+};

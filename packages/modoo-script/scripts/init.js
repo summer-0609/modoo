@@ -1,6 +1,7 @@
 const inquirer = require("inquirer");
 const fs = require("fs-extra");
 const chalk = require("chalk");
+const deepExtend = require("deep-extend");
 
 const { miniPrompts, getBoilerplateMeta, createApp } = require("../src/mini");
 

@@ -12,6 +12,36 @@ const log = console.log;
 const { renderAscii } = require("../utils");
 const { MODOO_FRAMEWORK_REPO } = require("../utils/constants");
 
+function initProject(proPath, inject) {
+  const pkgPath = path.join(proPath, "package.json");
+  const pkgObj = require(pkgPath);
+  fs.createWriteStream(pkgPath).end(
+    JSON.stringify(
+      deepExtend({}, pkgObj, {
+        name: inject.ProjectName,
+        version: "1.0.0",
+        private: true
+      }),
+      null,
+      "  "
+    )
+  );
+  readFiles(
+    proPath,
+    {
+      ignore: [
+        ".{pandora,git,idea,vscode,DS_Store}/**/*",
+        "{scripts,dist,node_modules}/**/*",
+        "**/*.{png,jpg,jpeg,gif,bmp,webp}"
+      ],
+      gitignore: true
+    },
+    ({ path, content }) => {
+      fs.createWriteStream(path).end(template(content, inject));
+    }
+  );
+}
+
 exports.miniPrompts = () => {
   const prompts = [];
 
@@ -57,7 +87,7 @@ exports.getBoilerplateMeta = framework => {
 
 exports.createApp = async (conf, template) => {
   // 下载脚手架
-  const { framework, projectName } = conf;
+  const { framework, projectName, appId } = conf;
   const { tarball, version, keywords } = template;
   const proPath = path.join(process.cwd(), projectName);
 
@@ -88,6 +118,11 @@ exports.createApp = async (conf, template) => {
     log(chalk.gray("开始下载 npm packages..."));
 
     ignoreStream.on("close", () => {
+      initProject(proPath, {
+        AppId: appId,
+        ProjectName: projectName
+      });
+
       fs.existsSync(path.join(proPath, "package.json")) &&
         npmi(
           {

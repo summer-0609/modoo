@@ -1,0 +1,41 @@
+{
+  "name": "appNamee12312",
+  "version": "1.0.0",
+  "description": "appNameInChinese小程序",
+  "main": "index.js",
+  "scripts": {
+    "dev": "gulp dev",
+    "compress": "gulp img",
+    "init": "tnpm install && cd miniprogram && tnpm install",
+    "lint": "./node_modules/.bin/eslint miniprogram",
+    "stylelint": "./node_modules/.bin/stylelint miniprogram/**/*.css",
+    "stylelint:fix": "./node_modules/.bin/stylelint miniprogram/**/*.css --fix",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "nohost": "gulp nohost",
+    "rmnohost": "gulp removeNohost"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "node_modules/commitlint-config-imt/cz-config.js"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "chalk": "^3.0.0",
+    "commitlint-config-imt": "0.0.4",
+    "eslint": "^5.7.0",
+    "eslint-config-imweb": "^0.2.11",
+    "gulp": "^4.0.2",
+    "gulp-less": "^4.0.1",
+    "gulp-postcss": "^8.0.0",
+    "gulp-rename": "^2.0.0",
+    "postcss-less": "^3.1.4",
+    "prettier": "^2.0.1"
+  }
+}
