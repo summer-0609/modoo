@@ -10,8 +10,7 @@ const deepExtend = require("deep-extend");
 
 const log = console.log;
 
-const { renderAscii, template } = require("../utils");
-const { MODOO_FRAMEWORK_REPO } = require("../utils/constants");
+const { renderAscii, template, readFiles } = require("../utils");
 
 function initProject(proPath, inject) {
   const pkgPath = path.join(proPath, "package.json");
@@ -58,7 +57,7 @@ exports.miniPrompts = () => {
     },
     when(answer) {
       const { framework } = answer;
-      return framework === "mini";
+      return framework.split("-").pop() === "mini";
     }
   });
 
@@ -66,7 +65,8 @@ exports.miniPrompts = () => {
 };
 
 exports.getBoilerplateMeta = framework => {
-  return pkg(MODOO_FRAMEWORK_REPO[framework], {
+  log(chalk.gray(`您已选择 ${framework} 远程模版。`));
+  return pkg(framework, {
     fullMetadata: true,
     registryUrl: "http://47.116.3.37:4873/"
   }).then(metadata => {
@@ -88,7 +88,7 @@ exports.getBoilerplateMeta = framework => {
 
 exports.createApp = async (conf, template) => {
   // 下载脚手架
-  const { framework, projectName, appId } = conf;
+  const { framework, projectName, appId, description } = conf;
   const { tarball, version, keywords } = template;
   const proPath = path.join(process.cwd(), projectName);
 
@@ -113,37 +113,32 @@ exports.createApp = async (conf, template) => {
 
   stream.pipe(tar.x(tarOpts)).on("close", () => {
     spinner.succeed(chalk.green("下载远程模块完成！"));
-    const ignoreStream = fs.createWriteStream(path.join(proPath, ".gitignore"));
 
     log(" ".padEnd(2, "\n"));
     log(chalk.gray("开始下载 npm packages..."));
 
-    ignoreStream.on("close", () => {
-      initProject(proPath, {
-        AppId: appId,
-        ProjectName: projectName
-      });
-
-      fs.existsSync(path.join(proPath, "package.json")) &&
-        npmi(
-          {
-            path: proPath,
-            localInstall: true
-          },
-          (error, result) => {
-            if (error) {
-              return console.error(error);
-            }
-            log(
-              chalk.green(`Successed install ${result.length} npm packages.`)
-            );
-            log("", null, false);
-            log("", null, false);
-            log(chalk.green("Project finish init Enjoy youself!"));
-            renderAscii();
-          }
-        );
+    initProject(proPath, {
+      AppId: appId,
+      ProjectName: projectName,
+      Description: description
     });
-    // log.info("Start install npm packages ...");
+
+    fs.existsSync(path.join(proPath, "package.json")) &&
+      npmi(
+        {
+          path: proPath,
+          localInstall: true
+        },
+        (error, result) => {
+          if (error) {
+            return console.error(error);
+          }
+          log(chalk.green(`Successed install ${result.length} npm packages.`));
+          log("", null, false);
+          log("", null, false);
+          log(chalk.green("Project finish init Enjoy youself!"));
+          renderAscii();
+        }
+      );
   });
 };

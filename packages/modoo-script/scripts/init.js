@@ -4,7 +4,7 @@ const ora = require("ora");
 const chalk = require("chalk");
 
 const { miniPrompts, getBoilerplateMeta, createApp } = require("../src/mini");
-
+const { MODOO_FRAMEWORK_NAME } = require("../utils/constants");
 const getList = require("../utils/get-list");
 
 // 需要渲染的模版数据
@@ -21,11 +21,13 @@ class Init {
       },
       options
     );
+    // 所有的框架模版
+    this.frameworks = [];
   }
-  async init() {
-    console.log(chalk.gray("modoo-script 即将创建一个新项目!"));
-    console.log();
 
+  async init() {
+    console.log(chalk.green(` modoo-script 即将创建一个新项目!`));
+    console.log();
     const spinner = ora(
       chalk.green("modoo-script 正在查找远程仓库模版...")
     ).start();
@@ -37,11 +39,15 @@ class Init {
     );
     if (list.length) {
       spinner.succeed(chalk.green("modoo-script 已成功找到找到远程模版!"));
+      console.log();
+      this.frameworks = list.map(({ name }) => ({
+        name,
+        framework: name.split("-").pop()
+      }));
     }
-    return list;
   }
   create() {
-    this.init().then(list => {
+    this.init().then(() => {
       this.ask().then(answers => {
         this.conf = Object.assign(this.conf, answers);
         this.write();
@@ -62,26 +68,24 @@ class Init {
   }
   askFrameWork(conf, prompts) {
     if (typeof conf.framework !== "string") {
+      const choices = this.frameworks.map(item => ({
+        name: MODOO_FRAMEWORK_NAME[item.framework],
+        value: item.name
+      }));
+
       prompts.push({
         type: "list",
         name: "framework",
         message: "请选择脚手架框架",
         // 暂时只有 微信原生小程序，之后加入 vue/react
-        choices: [
-          { name: "微信原生小程序", value: "mini" }
-          // { name: "react", value: "react" }
-        ]
+        choices
       });
     }
   }
   askProjectName(conf, prompts) {
     async function searchNpm(answers) {
       const { framework } = answers;
-      console.log(
-        chalk.cyan(`正在寻找 ${framework} 远程模板仓库(请耐心等候)...`)
-      );
       template = await getBoilerplateMeta(framework);
-      console.log(chalk.green("已成功找到模板仓库！"));
       return true;
     }
 
