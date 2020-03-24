@@ -1,6 +1,6 @@
 {
   "name": "@modoo/modoo-template-mini",
-  "version": "1.0.0",
+  "version": "0.0.4",
   "description": "appNameInChinese小程序",
   "main": "index.js",
   "scripts": {
