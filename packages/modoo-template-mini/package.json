@@ -1,5 +1,5 @@
 {
-  "name": "341243123",
+  "name": "@modoo/modoo-template-mini",
   "version": "1.0.0",
   "description": "appNameInChinese小程序",
   "main": "index.js",
@@ -23,7 +23,7 @@
     "**/*.less": "stylelint '**/*.less' --fix",
     "*.{js}": [
       "prettier --write",
-      "eslint --fix",
+      "eslint",
       "git add"
     ]
   },

@@ -1,7 +1,7 @@
 const inquirer = require("inquirer");
 const fs = require("fs-extra");
+const ora = require("ora");
 const chalk = require("chalk");
-const deepExtend = require("deep-extend");
 
 const { miniPrompts, getBoilerplateMeta, createApp } = require("../src/mini");
 
@@ -22,22 +22,30 @@ class Init {
       options
     );
   }
-  init() {
-    console.log(chalk.green(`modoo-script 即将创建一个新项目!`));
-    console
-      .log
-      //   "Need help? Go and open issue: https://github.com/NervJS/taro/issues/new"
-      ();
-    console.log("Wait for a monment...");
+  async init() {
+    console.log(chalk.gray("modoo-script 即将创建一个新项目!"));
     console.log();
+
+    const spinner = ora(
+      chalk.green("modoo-script 正在查找远程仓库模版...")
+    ).start();
+
+    const list = await getList().catch(
+      ({ message = "Get boilerplates failed." }) => {
+        log.error(message);
+      }
+    );
+    if (list.length) {
+      spinner.succeed(chalk.green("modoo-script 已成功找到找到远程模版!"));
+    }
+    return list;
   }
   create() {
-    // this.fetchTemplates();
-
-    this.ask().then(answers => {
-      this.conf = Object.assign(this.conf, answers);
-      this.write();
-      // console.log(1, answer);
+    this.init().then(list => {
+      this.ask().then(answers => {
+        this.conf = Object.assign(this.conf, answers);
+        this.write();
+      });
     });
   }
   ask() {
@@ -49,8 +57,7 @@ class Init {
     this.askDescription(conf, prompts);
     this.askMini(prompts);
 
-    this.askCSS(conf, prompts);
-
+    // this.askCSS(conf, prompts);
     return inquirer.prompt(prompts);
   }
   askFrameWork(conf, prompts) {

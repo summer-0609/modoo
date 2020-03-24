@@ -6,10 +6,11 @@ const path = require("path");
 const ora = require("ora");
 const npmi = require("npmi");
 const chalk = require("chalk");
+const deepExtend = require("deep-extend");
 
 const log = console.log;
 
-const { renderAscii } = require("../utils");
+const { renderAscii, template } = require("../utils");
 const { MODOO_FRAMEWORK_REPO } = require("../utils/constants");
 
 function initProject(proPath, inject) {
