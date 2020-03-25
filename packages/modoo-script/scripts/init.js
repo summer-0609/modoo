@@ -130,9 +130,9 @@ class Init {
         type: "input",
         name: "description",
         message: "请输入项目介绍:",
-        when: answers => {
+        when: async answers => {
           if (!template) {
-            searchNpm(answers);
+            await searchNpm(answers);
           }
           return true;
         }

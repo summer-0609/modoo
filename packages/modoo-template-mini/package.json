@@ -11,6 +11,10 @@
     "eslint": "eslint --ext .js miniprogram/",
     "commit": "git-cz"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Hyattria/modoo.git"
+  },
   "config": {
     "commitizen": {
       "path": "node_modules/cz-customizable"

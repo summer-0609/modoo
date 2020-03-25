@@ -1,7 +1,7 @@
 {
   "name": "@modoo/modoo-script",
   "version": "0.1.5",
-  "description": "",
+  "description": "摩都娱购电商平台 Node CLI",
   "main": "index.js",
   "bin": {
     "modoo-script": "./bin/modoo-script.js"
@@ -9,7 +9,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "node",
+    "cli"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Hyattria/modoo.git"
+  },
   "author": "xtmike008@gmail.com",
   "license": "ISC",
   "dependencies": {
