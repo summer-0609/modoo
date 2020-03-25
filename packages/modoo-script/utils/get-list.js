@@ -4,7 +4,7 @@ module.exports = () => {
   let list = [];
   try {
     const listJSON = execSync(
-      "npm search  --json --registry http://47.116.3.37:4873/ @modoo/modoo-template"
+      "npm search  --json --registry https://registry.npmjs.com/ @modoo/modoo-template"
     );
     list = JSON.parse(listJSON);
   } catch (error) {}
