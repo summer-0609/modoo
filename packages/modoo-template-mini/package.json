@@ -64,5 +64,8 @@
     "stylelint-config-prettier": "^8.0.1",
     "stylelint-config-standard": "^20.0.0"
   },
-  "gitHead": "4d8a3040f5b4c092024a7d4411feb3287f0e8eb4"
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "4139f9527fd6269e7d3110f0331a0234a8ce4f16"
 }
