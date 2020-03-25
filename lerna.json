@@ -2,11 +2,9 @@
   "npmClient": "yarn",
   "command": {
     "publish": {
-      "resgitry": "https://registry.npmjs.com/"
+      "resgitry": "http://registry.npmjs.org/"
     }
   },
-  "packages": [
-    "packages/*"
-  ],
+  "packages": ["packages/*"],
   "version": "0.1.1"
 }
