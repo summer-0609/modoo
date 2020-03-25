@@ -27,7 +27,7 @@ function initProject(proPath, inject) {
     JSON.stringify(
       deepExtend({}, pkgObj, {
         name: inject.ProjectName,
-        description: inject.description,
+        description: inject.Description,
         version: "1.0.0",
         private: true
       }),

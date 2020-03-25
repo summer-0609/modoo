@@ -34,7 +34,6 @@ class Init {
 
   async init() {
     console.log(chalk.green(` modoo-script 即将创建一个新项目!`));
-    console.log();
     const spinner = ora(
       chalk.green("modoo-script 正在查找远程仓库模版...")
     ).start();
