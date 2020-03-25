@@ -1,6 +1,6 @@
 {
   "name": "@modoo/modoo-template-mini",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "摩都娱购电商平台小程序模版",
   "main": "index.js",
   "scripts": {
