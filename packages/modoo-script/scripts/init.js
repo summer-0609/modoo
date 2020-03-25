@@ -39,7 +39,7 @@ class Init {
     ).start();
 
     const list = await getList().catch(
-      ({ message = "Get boilerplates failed." }) => {
+      ({ message = "Get Npm Tempaltes failed." }) => {
         log.error(message);
       }
     );
@@ -69,8 +69,6 @@ class Init {
     this.askDescription(conf, prompts);
     this.askMini(prompts);
 
-    // 暂时只有 less
-    // this.askCSS(conf, prompts);
     return inquirer.prompt(prompts);
   }
   askFrameWork(conf, prompts) {
@@ -141,29 +139,6 @@ class Init {
   }
   askMini(prompts) {
     prompts.push(...miniPrompts());
-  }
-  askCSS(conf, prompts) {
-    if (typeof conf.css !== "string") {
-      prompts.push({
-        type: "list",
-        name: "css",
-        message: "请选择 CSS 处理器（Wxss/Sass/Less）",
-        choices: [
-          {
-            name: "Wxss",
-            value: "wxss"
-          },
-          {
-            name: "Sass",
-            value: "sass"
-          },
-          {
-            name: "Less",
-            value: "less"
-          }
-        ]
-      });
-    }
   }
   write() {
     createApp(this.conf, template);

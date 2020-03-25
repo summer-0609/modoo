@@ -76,9 +76,9 @@ exports.miniPrompts = () => {
 exports.getBoilerplateMeta = framework => {
   log(chalk.gray(`您已选择 ${framework} 远程模版。`));
   return pkg(framework, {
-    fullMetadata: true,
-    registryUrl: "http://47.116.3.37:4873/"
+    fullMetadata: true
   }).then(metadata => {
+    console.log(metadata);
     const {
       dist: { tarball },
       version,

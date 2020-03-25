@@ -5,7 +5,7 @@
 ## install
 
 ```
-yarn global @modoo/modoo-script
+yarn global add @modoo/modoo-script
 ```
 
 ## init
