@@ -4,8 +4,8 @@ const rename = require('gulp-rename');
 
 const ora = require('ora');
 const postcss = require('gulp-postcss');
-const imagemin = require('gulp-imagemin');
-const cache = require('gulp-cache'); // 使用缓存
+// const imagemin = require('gulp-imagemin');
+// const cache = require('gulp-cache'); // 使用缓存
 const less = require('gulp-less');
 
 const env = process.env.NODE_ENV;
@@ -29,27 +29,28 @@ gulp.task('less', () => {
     );
 });
 
-gulp.task('miniimage', () => {
-  return gulp
-    .src('./miniprogram/**/*.{png,jpe?g,gif,svg}')
-    .pipe(
-      cache(
-        imagemin([
-          // imagemin.gifsicle({ interlaced: true }), // 严重影响速度
-          imagemin.mozjpeg({ quality: 75, progressive: true }),
-          imagemin.optipng({ optimizationLevel: 5 }),
-          imagemin.svgo({
-            plugins: [{ removeViewBox: true }, { cleanupIDs: false }],
-          }),
-        ])
-      )
-    )
-    .pipe(
-      gulp.dest((file) => {
-        return file.base; // 原目录
-      })
-    );
-});
+// 构建速度太慢，暂时关闭
+// gulp.task('miniimage', () => {
+//   return gulp
+//     .src('./miniprogram/**/*.{png,jpe?g,gif,svg}')
+//     .pipe(
+//       cache(
+//         imagemin([
+//           // imagemin.gifsicle({ interlaced: true }), // 严重影响速度
+//           imagemin.mozjpeg({ quality: 75, progressive: true }),
+//           imagemin.optipng({ optimizationLevel: 5 }),
+//           imagemin.svgo({
+//             plugins: [{ removeViewBox: true }, { cleanupIDs: false }],
+//           }),
+//         ])
+//       )
+//     )
+//     .pipe(
+//       gulp.dest((file) => {
+//         return file.base; // 原目录
+//       })
+//     );
+// });
 
 gulp.task(
   'dev',
@@ -64,7 +65,7 @@ gulp.task(
 
 gulp.task(
   'build',
-  gulp.series(gulp.parallel('less', 'miniimage'), (done) => {
+  gulp.series(gulp.parallel('less'), (done) => {
     const spinner = ora(chalk.cyan('正在编译文件...')).start();
     done();
     log(' '.padEnd(2, '\n'));

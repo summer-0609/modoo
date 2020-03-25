@@ -20,7 +20,7 @@ const request = (url, method, data, options) => {
 
     // 请求谓词
     method = (method || 'GET').toUpperCase();
-    if (method == 'POST') {
+    if (method === 'POST') {
       header['Content-Type'] = 'application/json';
     }
 

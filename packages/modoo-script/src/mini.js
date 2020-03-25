@@ -4,21 +4,30 @@ const got = require("got");
 const tar = require("tar");
 const path = require("path");
 const ora = require("ora");
-const npmi = require("npmi");
+const { exec } = require("child_process");
 const chalk = require("chalk");
 const deepExtend = require("deep-extend");
 
 const log = console.log;
 
-const { renderAscii, template, readFiles } = require("../utils");
+const {
+  renderAscii,
+  template,
+  readFiles,
+  shouldUseYarn,
+  shouldUseCnpm
+} = require("../utils");
 
+// 覆盖脚手架配置属性
 function initProject(proPath, inject) {
   const pkgPath = path.join(proPath, "package.json");
   const pkgObj = require(pkgPath);
+
   fs.createWriteStream(pkgPath).end(
     JSON.stringify(
       deepExtend({}, pkgObj, {
         name: inject.ProjectName,
+        description: inject.description,
         version: "1.0.0",
         private: true
       }),
@@ -89,7 +98,7 @@ exports.getBoilerplateMeta = framework => {
 exports.createApp = async (conf, template) => {
   // 下载脚手架
   const { framework, projectName, appId, description } = conf;
-  const { tarball, version, keywords } = template;
+  const { tarball } = template;
   const proPath = path.join(process.cwd(), projectName);
 
   if (tarball <= 0) {
@@ -111,11 +120,9 @@ exports.createApp = async (conf, template) => {
     C: proPath
   };
 
+  // 管道流传输下载文件到当前目录
   stream.pipe(tar.x(tarOpts)).on("close", () => {
     spinner.succeed(chalk.green("下载远程模块完成！"));
-
-    log(" ".padEnd(2, "\n"));
-    log(chalk.gray("开始下载 npm packages..."));
 
     initProject(proPath, {
       AppId: appId,
@@ -123,22 +130,59 @@ exports.createApp = async (conf, template) => {
       Description: description
     });
 
-    fs.existsSync(path.join(proPath, "package.json")) &&
-      npmi(
-        {
-          path: proPath,
-          localInstall: true
-        },
-        (error, result) => {
-          if (error) {
-            return console.error(error);
-          }
-          log(chalk.green(`Successed install ${result.length} npm packages.`));
-          log("", null, false);
-          log("", null, false);
-          log(chalk.green("Project finish init Enjoy youself!"));
-          renderAscii();
+    process.chdir(proPath);
+
+    // git init
+    const gitInitSpinner = ora(
+      `cd ${chalk.cyan.bold(projectName)}, 执行 ${chalk.cyan.bold("git init")}`
+    ).start();
+
+    const gitInit = exec("git init");
+    gitInit.on("close", code => {
+      if (code === 0) {
+        gitInitSpinner.color = "green";
+        gitInitSpinner.succeed(gitInit.stdout.read());
+      } else {
+        gitInitSpinner.color = "red";
+        gitInitSpinner.fail(gitInit.stderr.read());
+      }
+    });
+
+    let command = "";
+    if (shouldUseYarn()) {
+      command = "yarn";
+    } else if (shouldUseCnpm()) {
+      command = "cnpm install";
+    } else {
+      command = "npm install";
+    }
+
+    log(" ".padEnd(2, "\n"));
+    const installSpinner = ora(
+      `执行安装项目依赖 ${chalk.cyan.bold(command)}, 需要一会儿...`
+    ).start();
+
+    if (fs.existsSync(path.join(proPath, "package.json"))) {
+      exec(command, (error, stdout, stderr) => {
+        if (error) {
+          installSpinner.color = "red";
+          installSpinner.fail(chalk.red("安装项目依赖失败，请自行重新安装！"));
+          console.log(error);
+        } else {
+          installSpinner.color = "green";
+          installSpinner.succeed("安装成功");
+          log(`${stderr}${stdout}`);
         }
-      );
+        log("");
+        log("");
+        log(chalk.green(`创建项目 ${chalk.green.bold(projectName)} 成功！`));
+        log(
+          chalk.green(
+            `请进入项目目录 ${chalk.green.bold(projectName)} 开始工作吧！😝`
+          )
+        );
+        renderAscii();
+      });
+    }
   });
 };

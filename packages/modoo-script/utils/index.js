@@ -4,6 +4,8 @@ const chalk = require("chalk");
 const globby = require("globby");
 const path = require("path");
 
+const { execSync } = require("child_process");
+
 exports.getUserHomeDir = function() {
   function homedir() {
     const env = process.env;
@@ -31,9 +33,9 @@ exports.renderAscii = () => {
   const ascii = fs.readFileSync(
     path.resolve(__dirname, "../resource/ascii-modoojs.txt")
   );
-  console.log("", null, false);
-  console.log(chalk.green(ascii), false);
-  console.log("", null, false);
+  console.log("");
+  console.log(chalk.green(ascii));
+  console.log("");
 };
 
 exports.template = (content = "", inject) => {
@@ -69,4 +71,24 @@ exports.readFiles = (dir, options, done) => {
       content: fs.readFileSync(file, { encoding: "utf8" })
     });
   });
+};
+
+// yarn
+exports.shouldUseYarn = () => {
+  try {
+    execSync("yarn --version", { stdio: "ignore" });
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
+// cnpm
+exports.shouldUseCnpm = () => {
+  try {
+    execSync("cnpm --version", { stdio: "ignore" });
+    return true;
+  } catch (e) {
+    return false;
+  }
 };

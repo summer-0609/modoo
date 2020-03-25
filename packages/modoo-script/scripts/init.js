@@ -3,12 +3,19 @@ const fs = require("fs-extra");
 const ora = require("ora");
 const chalk = require("chalk");
 
-const { miniPrompts, getBoilerplateMeta, createApp } = require("../src/mini");
-const { MODOO_FRAMEWORK_NAME } = require("../utils/constants");
 const getList = require("../utils/get-list");
 
+const { miniPrompts, getBoilerplateMeta, createApp } = require("../src/mini");
+const { MODOO_FRAMEWORK_NAME } = require("../utils/constants");
+
 // 需要渲染的模版数据
-let template = {};
+let template = undefined;
+
+async function searchNpm(answers) {
+  const { framework } = answers;
+  template = await getBoilerplateMeta(framework);
+  return true;
+}
 
 class Init {
   constructor(options) {
@@ -63,6 +70,7 @@ class Init {
     this.askDescription(conf, prompts);
     this.askMini(prompts);
 
+    // 暂时只有 less
     // this.askCSS(conf, prompts);
     return inquirer.prompt(prompts);
   }
@@ -83,12 +91,6 @@ class Init {
     }
   }
   askProjectName(conf, prompts) {
-    async function searchNpm(answers) {
-      const { framework } = answers;
-      template = await getBoilerplateMeta(framework);
-      return true;
-    }
-
     if (typeof conf.projectName !== "string") {
       prompts.push({
         type: "input",
@@ -128,7 +130,13 @@ class Init {
       prompts.push({
         type: "input",
         name: "description",
-        message: "请输入项目介绍:"
+        message: "请输入项目介绍:",
+        when: answers => {
+          if (!template) {
+            searchNpm(answers);
+          }
+          return true;
+        }
       });
     }
   }
