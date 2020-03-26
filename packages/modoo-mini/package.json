@@ -1,6 +1,6 @@
 {
   "name": "modoo-mini",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@modoo/modoo-script": "^0.1.16"
+    "@modoo/modoo-script": "^0.1.17"
   },
   "keywords": [],
   "author": "",
