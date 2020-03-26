@@ -1,6 +1,6 @@
 {
   "name": "@modoo/modoo-script",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "摩都娱购电商平台 Node CLI",
   "main": "index.js",
   "bin": {
