@@ -2,6 +2,7 @@ const inquirer = require("inquirer");
 const fs = require("fs-extra");
 const ora = require("ora");
 const chalk = require("chalk");
+const logSymbols = require("log-symbols");
 
 const getList = require("../utils/get-list");
 
@@ -23,7 +24,6 @@ class Init {
       {
         projectName: "",
         projectDir: "",
-        template: "",
         description: ""
       },
       options
@@ -33,9 +33,12 @@ class Init {
   }
 
   async init() {
-    console.log(chalk.green(` modoo-script 即将创建一个新项目!`));
+    console.log(
+      logSymbols.info,
+      chalk.cyan(`modoo-script 即将创建一个新项目!`)
+    );
     const spinner = ora(
-      chalk.green("modoo-script 正在查找远程仓库模版...")
+      chalk.green("modoo-script 正在寻找远程仓库模版库...")
     ).start();
 
     const list = await getList().catch(
@@ -43,8 +46,9 @@ class Init {
         log.error(message);
       }
     );
+
     if (list.length) {
-      spinner.succeed(chalk.green("modoo-script 已成功找到找到远程模版!"));
+      spinner.succeed(chalk.green("modoo-script 已成功找到找到远程模版库!"));
       console.log();
       this.frameworks = list.map(({ name }) => ({
         name,

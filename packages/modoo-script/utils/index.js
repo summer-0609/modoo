@@ -1,8 +1,8 @@
-const os = require("os");
 const fs = require("fs");
 const chalk = require("chalk");
 const globby = require("globby");
 const path = require("path");
+
 const { execSync } = require("child_process");
 
 // 渲染二进制图

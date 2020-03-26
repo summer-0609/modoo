@@ -4,6 +4,8 @@ const got = require("got");
 const tar = require("tar");
 const path = require("path");
 const ora = require("ora");
+const logSymbols = require("log-symbols");
+
 const { exec } = require("child_process");
 const chalk = require("chalk");
 const deepExtend = require("deep-extend");
@@ -74,17 +76,24 @@ exports.miniPrompts = () => {
 };
 
 exports.getBoilerplateMeta = framework => {
-  log(chalk.gray(`您已选择 ${framework} 远程模版。`));
+  log(
+    logSymbols.info,
+    chalk.cyan(`您已选择 ${framework} 远程模版, 正在查询该模版...`)
+  );
+
   return pkg(framework, {
     fullMetadata: true
   }).then(metadata => {
-    console.log(metadata);
     const {
       dist: { tarball },
       version,
       name,
       keywords
     } = metadata;
+    log(
+      logSymbols.success,
+      chalk.green(`已为您找到 ${framework} 远程模版, 请输入配置信息`)
+    );
 
     return {
       tarball,
@@ -175,8 +184,12 @@ exports.createApp = async (conf, template) => {
         }
         log("");
         log("");
-        log(chalk.green(`创建项目 ${chalk.green.bold(projectName)} 成功！`));
         log(
+          logSymbols.success,
+          chalk.green(`创建项目 ${chalk.green.bold(projectName)} 成功！`)
+        );
+        log(
+          logSymbols.success,
           chalk.green(
             `请进入项目目录 ${chalk.green.bold(projectName)} 开始工作吧！😝`
           )
