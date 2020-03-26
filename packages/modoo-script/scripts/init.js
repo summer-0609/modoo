@@ -50,6 +50,7 @@ class Init {
     if (list.length) {
       spinner.succeed(chalk.green("modoo-script 已成功找到找到远程模版库!"));
       console.log();
+
       this.frameworks = list.map(({ name }) => ({
         name,
         framework: name.split("-").pop()
