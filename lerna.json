@@ -5,8 +5,6 @@
       "registry": "http://registry.npmjs.org/"
     }
   },
-  "packages": [
-    "packages/*"
-  ],
+  "packages": ["packages/*"],
   "version": "0.1.13"
 }
