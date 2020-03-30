@@ -1,3 +1,5 @@
+"use strict";
+
 const inquirer = require("inquirer");
 const fs = require("fs-extra");
 const ora = require("ora");
@@ -43,7 +45,7 @@ class Init {
 
     const list = await getList().catch(
       ({ message = "Get Npm Tempaltes failed." }) => {
-        log.error(message);
+        console.log.error(message);
       }
     );
 

@@ -3,10 +3,13 @@
   "command": {
     "publish": {
       "registry": "http://registry.npmjs.org/"
+    },
+    "command": {
+      "bootstrap": {
+        "hoist": true
+      }
     }
   },
-  "packages": [
-    "packages/*"
-  ],
+  "packages": ["packages/*"],
   "version": "0.1.17"
 }
