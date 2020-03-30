@@ -1,60 +1,88 @@
 const gulp = require('gulp');
 const chalk = require('chalk');
-const rename = require('gulp-rename');
-
+const del = require('del');
 const ora = require('ora');
-const postcss = require('gulp-postcss');
-// const imagemin = require('gulp-imagemin');
-// const cache = require('gulp-cache'); // 使用缓存
+
+const rename = require('gulp-rename');
+const jsonminify = require('gulp-jsonminify2');
+
 const less = require('gulp-less');
+const postcss = require('gulp-postcss');
+const purify = require('gulp-purifycss');
+const htmlmin = require('gulp-htmlmin');
 
 const env = process.env.NODE_ENV;
-
 const { log } = console;
+
+gulp.task('clean', () => {
+  return del(['./dist/**']);
+});
+
+gulp.task('json', () => {
+  return gulp.src('./src/**/*.json').pipe(jsonminify()).pipe(gulp.dest('./dist'));
+});
+
+gulp.task('assets', () => {
+  return gulp.src('./src/assets/**').pipe(gulp.dest('./dist/assets'));
+});
+
+gulp.task('templtes', () => {
+  return gulp
+    .src('./src/**/*.wxml')
+    .pipe(
+      htmlmin({
+        collapseWhitespace: true,
+        removeComments: true,
+        keepClosingSlash: true,
+      })
+    )
+    .pipe(gulp.dest('./dist'));
+});
 
 gulp.task('less', () => {
   return gulp
-    .src('./miniprogram/**/*.less')
+    .src('./src/**/*.less')
     .pipe(less())
     .pipe(postcss())
+    .pipe(purify(['./src/**/*.wxml'], { minify: true }))
     .pipe(
       rename((path) => {
         path.extname = '.wxss';
       })
     )
-    .pipe(
-      gulp.dest((file) => {
-        return file.base; // 原目录
-      })
-    );
+    .pipe(gulp.dest('./dist'));
 });
 
-// 构建速度太慢，暂时关闭
-// gulp.task('miniimage', () => {
-//   return gulp
-//     .src('./miniprogram/**/*.{png,jpe?g,gif,svg}')
-//     .pipe(
-//       cache(
-//         imagemin([
-//           // imagemin.gifsicle({ interlaced: true }), // 严重影响速度
-//           imagemin.mozjpeg({ quality: 75, progressive: true }),
-//           imagemin.optipng({ optimizationLevel: 5 }),
-//           imagemin.svgo({
-//             plugins: [{ removeViewBox: true }, { cleanupIDs: false }],
-//           }),
-//         ])
-//       )
-//     )
-//     .pipe(
-//       gulp.dest((file) => {
-//         return file.base; // 原目录
-//       })
-//     );
-// });
+gulp.task('scripts', () => {
+  return gulp.src('./src/**/*.js').pipe(gulp.dest('./dist'));
+});
+
+gulp.task('template', () => {
+  return gulp
+    .src('./src/**/*.wxml')
+    .pipe(
+      htmlmin({
+        collapseWhitespace: true,
+        removeComments: true,
+        keepClosingSlash: true,
+      })
+    )
+    .pipe(gulp.dest('./dist'));
+});
+
+gulp.task(
+  'build',
+  gulp.series(gulp.parallel('less', 'json', 'assets', 'template', 'scripts'), (done) => {
+    const spinner = ora(chalk.cyan('正在编译文件...')).start();
+    done();
+    log(' '.padEnd(2, '\n'));
+    spinner.succeed(chalk.green('编译完成, 可以上传代码啦...'));
+  })
+);
 
 gulp.task(
   'dev',
-  gulp.series('less', (done) => {
+  gulp.series(['less', 'json', 'assets', 'template', 'scripts'], (done) => {
     done();
     if (env === 'development') {
       log(' '.padEnd(2, '\n'));
@@ -63,18 +91,13 @@ gulp.task(
   })
 );
 
-gulp.task(
-  'build',
-  gulp.series(gulp.parallel('less'), (done) => {
-    const spinner = ora(chalk.cyan('正在编译文件...')).start();
-    done();
-    log(' '.padEnd(2, '\n'));
-    spinner.succeed(chalk.green('编译完成, 可以上传代码啦...'));
-  })
-);
-
 if (env === 'development') {
-  gulp.watch(['./miniprogram/**/*.less'], gulp.series('less')).on('change', (path) => {
-    log(chalk.greenBright(`File ${path} was changed`));
-  });
+  gulp
+    .watch(
+      ['./src/**/*.less', './src/**/*.json', './src/assets/**', './src/**/*.wxml', './src/**/*.js'],
+      gulp.series('less', 'json', 'assets', 'template', 'scripts')
+    )
+    .on('change', (path) => {
+      log(chalk.greenBright(`File ${path} was changed`));
+    });
 }

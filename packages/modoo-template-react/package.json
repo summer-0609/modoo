@@ -38,6 +38,12 @@
     "**/*.{js,jsx}": "npm run lint-staged:js",
     "**/*.less": "stylelint --syntax less"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint-staged",
+      "commit-msg": "commitlint -e $GIT_PARAMS"
+    }
+  },
   "config": {
     "commitizen": {
       "path": "node_modules/cz-customizable"

@@ -44,14 +44,14 @@ const request = (url, method, data, options) => {
           return;
         }
 
-        const { code, message, data } = response;
+        const { code, message } = response;
         if (code !== 20000) {
           wx.showToast({ title: message, icon: 'none' });
           reject(message);
           return;
         }
 
-        resolve(data);
+        resolve(response.data);
       },
     });
   });
