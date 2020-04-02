@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "create-modoo-app aa --template mini",
     "script": "modoo-script react-start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@modoo/create-modoo-app": "1.0.0",
     "@modoo/modoo-script": "^0.1.17"
   },
   "keywords": [],
