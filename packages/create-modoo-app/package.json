@@ -1,0 +1,32 @@
+{
+  "name": "@modoo/create-modoo-app",
+  "version": "1.0.0",
+  "description": "",
+  "private": false,
+  "author": "xtmike008@gmail.com",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "files": [
+    "index.js",
+    "create-modoo.js",
+    "utils"
+  ],
+  "bin": {
+    "create-modoo-app": "./index.js"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "commander": "^5.0.0",
+    "cross-spawn": "^7.0.1",
+    "envinfo": "^7.5.0",
+    "fs-extra": "^9.0.0",
+    "inquirer": "^7.1.0",
+    "validate-npm-package-name": "^3.0.0"
+  }
+}
