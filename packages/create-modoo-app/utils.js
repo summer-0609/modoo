@@ -15,7 +15,7 @@ const FRAMEWORK_CONFIG_JSON = {
         "**/*.js": ["prettier --write", "npm run eslint", "git add"]
       }
     },
-    installPackage: "",
+    installPackage: "@modoo/modoo-script",
     template: "@modoo/modoo-template-mini",
     prettierLintDependencies: [
       "@commitlint/cli",

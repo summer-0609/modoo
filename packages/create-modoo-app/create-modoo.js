@@ -5,6 +5,7 @@ const chalk = require("chalk");
 const path = require("path");
 const fs = require("fs-extra");
 const dns = require("dns");
+const semver = require("semver");
 const os = require("os");
 const envinfo = require("envinfo");
 const spawn = require("cross-spawn");
@@ -122,6 +123,7 @@ createApp(
 
 async function createApp(name, verbose, version, useNpm, template) {
   const root = path.resolve(name);
+  // 项目名称
   const appName = path.basename(root);
 
   checkAppName(appName);
@@ -197,7 +199,8 @@ function run(
   let devsDependencies = [
     ...devDependencies(template),
     ...prettierLintDependencies(template),
-    packageToInstall
+    packageToInstall,
+    templateToInstall
   ].filter(Boolean);
 
   console.log("Installing packages. This might take a couple of minutes.");
@@ -232,14 +235,30 @@ function run(
       );
       console.log();
 
-      install(
+      return install(
         root,
         useYarn,
         dependencies(template),
         devsDependencies,
         verbose,
         isOnline
+      ).then(() => ({ packageInfo, templateInfo }));
+    })
+    .then(async ({ packageInfo, templateInfo }) => {
+      const packageName = packageInfo;
+      const templateName = templateInfo;
+
+      checkNodeVersion(packageName);
+
+      const scriptsPath = path.resolve(
+        process.cwd(),
+        "node_modules",
+        packageName,
+        "scripts",
+        "init.js"
       );
+      const init = require(scriptsPath);
+      init(root, appName, verbose, originalDirectory, templateName);
     });
 }
 
@@ -347,6 +366,32 @@ function checkAppName(appName) {
       ) +
         chalk.cyan(dependencies.map(depName => `  ${depName}`).join("\n")) +
         chalk.red("\n\nPlease choose a different project name.")
+    );
+    process.exit(1);
+  }
+}
+
+function checkNodeVersion(packageName) {
+  const packageJsonPath = path.resolve(
+    process.cwd(),
+    "node_modules",
+    packageName,
+    "package.json"
+  );
+  const packageJson = require(packageJsonPath);
+  if (!packageJson.engines || !packageJson.engines.node) {
+    return;
+  }
+
+  if (!semver.satisfies(process.version, packageJson.engines.node)) {
+    console.error(
+      chalk.red(
+        "You are running Node %s.\n" +
+          "Create React App requires Node %s or higher. \n" +
+          "Please update your version of Node."
+      ),
+      process.version,
+      packageJson.engines.node
     );
     process.exit(1);
   }
