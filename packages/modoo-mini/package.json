@@ -1,6 +1,6 @@
 {
   "name": "modoo-mini",
-  "version": "0.1.22",
+  "version": "0.1.23",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@modoo/create-modoo-app": "^0.1.21",
-    "@modoo/modoo-script": "^0.1.22",
+    "@modoo/modoo-script": "^0.1.23",
     "fs-extra": "8.1.0",
     "react-dev-utils": "^10.2.1"
   },
