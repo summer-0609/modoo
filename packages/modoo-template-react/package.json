@@ -1,52 +1,27 @@
 {
   "name": "@modoo/modoo-template-react",
   "version": "1.0.0",
-  "description": "@{Description}",
-  "main": "index.js",
+  "keywords": [
+    "react",
+    "create-modoo-app",
+    "template"
+  ],
+  "main": "template.json",
+  "author": "xtmike008@gmail.com",
+  "description": "The base template for Create Modoo App.",
   "scripts": {
-    "start": "modoo-script start",
-    "build": "modoo-script build",
-    "lint-staged": "lint-staged",
-    "lint-staged:js": "eslint --ext .js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@modoo/modoo-script": "^0.1.17",
-    "antd": "^4.1.0",
-    "dva": "^2.4.1",
-    "prettier": "^2.0.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "styled-components": "^5.0.1"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Hyattria/modoo.git",
+    "directory": "packages/modoo-template-react"
   },
-  "devDependencies": {
-    "commitizen": "^4.0.3",
-    "commitlint-config-cz": "^0.13.1",
-    "cz-conventional-changelog": "^3.1.0",
-    "cz-customizable": "^6.2.0",
-    "husky": "^4.2.3",
-    "lint-staged": "^10.0.10"
+  "license": "MIT",
+  "engines": {
+    "node": ">=8"
   },
-  "lint-staged": {
-    "**/*.{js,jsx,less}": [
-      "prettier --write",
-      "git add"
-    ],
-    "**/*.{js,jsx}": "npm run lint-staged:js",
-    "**/*.less": "stylelint --syntax less"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint-staged",
-      "commit-msg": "commitlint -e $GIT_PARAMS"
-    }
-  },
-  "config": {
-    "commitizen": {
-      "path": "node_modules/cz-customizable"
-    }
+  "publishConfig": {
+    "access": "public"
   }
 }
