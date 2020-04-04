@@ -1,6 +1,6 @@
 {
   "name": "modoo-mini",
-  "version": "0.1.23",
+  "version": "0.1.24",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,8 +9,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@modoo/create-modoo-app": "^0.1.21",
-    "@modoo/modoo-script": "^0.1.23",
+    "@modoo/create-modoo-app": "^0.1.24",
+    "@modoo/modoo-script": "^0.1.24",
     "fs-extra": "8.1.0",
     "react-dev-utils": "^10.2.1"
   },
