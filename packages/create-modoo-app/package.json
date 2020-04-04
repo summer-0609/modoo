@@ -1,6 +1,6 @@
 {
   "name": "@modoo/create-modoo-app",
-  "version": "0.1.25",
+  "version": "0.1.26",
   "description": "Create Modoo apps with no build configuration.",
   "author": "xtmike008@gmail.com",
   "scripts": {
