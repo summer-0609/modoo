@@ -180,7 +180,16 @@ async function createApp(name, verbose, version, useNpm, template) {
     process.exit(1);
   }
 
-  run(root, appName, version, verbose, originalDirectory, template, useYarn);
+  run(
+    root,
+    appName,
+    version,
+    verbose,
+    originalDirectory,
+    template,
+    useYarn,
+    answer
+  );
 }
 
 function run(
@@ -190,7 +199,8 @@ function run(
   verbose,
   originalDirectory,
   template,
-  useYarn
+  useYarn,
+  answer
 ) {
   // 需要下载的依赖包
   const packageToInstall = getInstallPackage(template);
