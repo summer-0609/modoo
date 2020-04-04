@@ -20,6 +20,7 @@ async function searchNpm(answers) {
   return true;
 }
 
+console.log(3);
 class Init {
   constructor(options) {
     this.conf = Object.assign(
