@@ -147,16 +147,13 @@ module.exports = function (
       const { description, api } = answer;
 
       fs.writeFile(
-        path.join(templateDir, "project.config.json"),
+        path.join(appPath, "project.config.json"),
         JSON.stringify(
-          Object.assign(
-            require(path.join(templateDir, "project.config.json")),
-            {
-              projectname: appName,
-              description,
-              api
-            }
-          ),
+          Object.assign(require(path.join(appPath, "project.config.json")), {
+            projectname: appName,
+            description,
+            api
+          }),
           null,
           2
         ) + os.EOL
@@ -199,10 +196,10 @@ module.exports = function (
   }
 
   // Initialize git repo
-  let initializedGit = false;
+  // let initializedGit = false;
 
   if (tryGitInit()) {
-    initializedGit = true;
+    // initializedGit = true;
     console.log();
     console.log("Initialized a git repository.");
   }
@@ -234,10 +231,10 @@ module.exports = function (
   }
 
   // Create git commit if git repo was initialized
-  if (initializedGit && tryGitCommit(appPath)) {
-    console.log();
-    console.log("Created git commit.");
-  }
+  // if (initializedGit && tryGitCommit(appPath)) {
+  //   console.log();
+  //   console.log("Created git commit.");
+  // }
 
   let cdpath;
   if (originalDirectory && path.join(originalDirectory, appName) === appPath) {
