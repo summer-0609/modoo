@@ -13,10 +13,10 @@
   "packages": [
     "packages/create-modoo-app",
     "packages/modoo-eslint-config",
-    "packages/modoo-script",
     "packages/modoo-mini",
+    "packages/modoo-script",
     "packages/modoo-template-mini",
     "packages/modoo-template-react"
   ],
-  "version": "0.1.19"
+  "version": "0.1.20"
 }
