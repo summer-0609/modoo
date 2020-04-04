@@ -1,6 +1,6 @@
 {
   "name": "@modoo/eslint-config-modoo-app",
-  "version": "1.0.0",
+  "version": "0.1.18",
   "description": "ESLint configuration used by Create Modoo App",
   "main": "index.js",
   "files": [
@@ -9,7 +9,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "peerDependencies": {},
   "dependencies": {
     "babel-eslint": "10.x",
     "confusing-browser-globals": "^1.0.7",
