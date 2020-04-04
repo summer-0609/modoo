@@ -12,7 +12,7 @@
   },
   "packages": [
     "packages/modoo-template-react",
-    "packages/mini",
+    "packages/modoo-template-mini",
     "packages/modoo-script",
     "packages/modoo-eslint-config",
     "packages/create-modoo-app"
