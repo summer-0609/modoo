@@ -1,6 +1,6 @@
 {
   "name": "@modoo/modoo-script",
-  "version": "0.1.19-alpha.0",
+  "version": "0.1.19",
   "description": "摩都娱购电商平台 Node CLI",
   "main": "index.js",
   "bin": {
@@ -23,7 +23,7 @@
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.0",
     "@babel/preset-react": "^7.9.4",
-    "@modoo/eslint-config-modoo-app": "^0.1.19-alpha.0",
+    "@modoo/eslint-config-modoo-app": "^0.1.19",
     "babel-loader": "^8.1.0",
     "babel-plugin-import": "^1.13.0",
     "babel-plugin-named-asset-import": "^0.3.6",

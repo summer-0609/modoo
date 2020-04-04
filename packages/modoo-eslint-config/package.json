@@ -1,6 +1,6 @@
 {
   "name": "@modoo/eslint-config-modoo-app",
-  "version": "0.1.19-alpha.0",
+  "version": "0.1.19",
   "description": "ESLint configuration used by Create Modoo App",
   "main": "index.js",
   "files": [
