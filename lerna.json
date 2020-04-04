@@ -11,11 +11,11 @@
     }
   },
   "packages": [
-    "packages/modoo-template-react",
-    "packages/modoo-template-mini",
-    "packages/modoo-script",
+    "packages/create-modoo-app",
     "packages/modoo-eslint-config",
-    "packages/create-modoo-app"
+    "packages/modoo-script",
+    "packages/modoo-template-mini",
+    "packages/modoo-template-react"
   ],
-  "version": "0.1.18"
+  "version": "0.1.19-alpha.0"
 }
