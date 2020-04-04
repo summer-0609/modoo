@@ -14,6 +14,7 @@
     "packages/create-modoo-app",
     "packages/modoo-eslint-config",
     "packages/modoo-script",
+    "packages/modoo-mini",
     "packages/modoo-template-mini",
     "packages/modoo-template-react"
   ],

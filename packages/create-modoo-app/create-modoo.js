@@ -127,7 +127,7 @@ async function createApp(name, verbose, version, useNpm, template) {
   const appName = path.basename(root);
 
   checkAppName(appName);
-  fs.removeSync(name);
+
   fs.ensureDirSync(name);
   if (!isSafeToCreateProjectIn(root, name)) {
     process.exit(1);

@@ -1,11 +1,15 @@
 {
   "name": "@modoo/create-modoo-app",
   "version": "0.1.19",
-  "description": "",
-  "private": false,
+  "description": "Create Modoo apps with no build configuration.",
   "author": "xtmike008@gmail.com",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Hyattria/modoo.git",
+    "directory": "packages/create-modoo-app"
   },
   "engines": {
     "node": ">=10"
@@ -13,7 +17,7 @@
   "files": [
     "index.js",
     "create-modoo.js",
-    "utils"
+    "utils.js"
   ],
   "bin": {
     "create-modoo-app": "./index.js"
@@ -33,5 +37,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "ba3571841a4653ec90489399395c7ccba078f840"
+  "gitHead": "c9c6741f98f28042fe834a2c1485adde0a1603ba"
 }
