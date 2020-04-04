@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "create-modoo-app aa --template mini",
+    "dev": "create-modoo-app aa",
     "script": "modoo-script react-start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -20,5 +20,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "6c3769a52613c97eeaefbf9f2659470c33bc7f08"
+  "gitHead": "b7a78a5c31d636bb03282aa6f60c5e3cf480b039"
 }

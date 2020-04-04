@@ -137,7 +137,7 @@ async function createApp(name, verbose, version, useNpm, template) {
   console.log(`Creating a new React app in ${chalk.green(root)}.`);
   console.log();
 
-  const { _template, ...answer } = await prompt({ template });
+  const { template: _template, ...answer } = await prompt({ template });
   template = _template || template;
 
   const packageJson = Object.assign(

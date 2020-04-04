@@ -20,7 +20,6 @@
 // even though most people don't know some of them exist (e.g. `name` or `status`).
 // This is dangerous as it hides accidentally undefined variables.
 // We blacklist the globals that we deem potentially confusing.
-// To use them, explicitly reference them, e.g. `window.name` or `window.status`.
 const restrictedGlobals = require("confusing-browser-globals");
 
 module.exports = {
