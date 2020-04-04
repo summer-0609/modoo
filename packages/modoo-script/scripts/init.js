@@ -48,9 +48,12 @@ function tryGitInit() {
 function tryGitCommit(appPath) {
   try {
     execSync("git add -A", { stdio: "ignore" });
-    execSync('git commit -m "Initialize project using Create React App"', {
-      stdio: "ignore"
-    });
+    execSync(
+      'git commit -m "Initialize project using @modoo/create-modoo-app"',
+      {
+        stdio: "ignore"
+      }
+    );
     return true;
   } catch (e) {
     // We couldn't commit in already initialized git repo,
@@ -75,7 +78,8 @@ module.exports = function (
   appName,
   verbose,
   originalDirectory,
-  templateName
+  templateName,
+  answer
 ) {
   const appPackage = require(path.join(appPath, "package.json"));
   const useYarn = fs.existsSync(path.join(appPath, "yarn.lock"));
@@ -100,10 +104,15 @@ module.exports = function (
     ".."
   );
 
-  appPackage.scripts = Object.assign(appPackage.scripts, {
-    start: "react-scripts start",
-    build: "react-scripts build"
-  });
+  appPackage.scripts = Object.assign(
+    appPackage.scripts,
+    templateName.split("-").includes("react")
+      ? {
+          start: "react-scripts start",
+          build: "react-scripts build"
+        }
+      : {}
+  );
 
   // Update scripts for Yarn users
   if (useYarn) {
@@ -133,6 +142,26 @@ module.exports = function (
   const templateDir = path.join(templatePath, "template");
   if (fs.existsSync(templateDir)) {
     fs.copySync(templateDir, appPath);
+
+    if (templateName.split("-").includes("mini")) {
+      const { description, api } = answer;
+
+      fs.writeFile(
+        path.join(templateDir, "project.config.json"),
+        JSON.stringify(
+          Object.assign(
+            require(path.join(templateDir, "project.config.json")),
+            {
+              projectname: appName,
+              description,
+              api
+            }
+          ),
+          null,
+          2
+        ) + os.EOL
+      );
+    }
   } else {
     console.error(
       `Could not locate supplied template: ${chalk.green(templateDir)}`

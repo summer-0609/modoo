@@ -147,15 +147,15 @@ async function createApp(name, verbose, version, useNpm, template) {
       description: answer.description,
       private: true,
       license: "MIT",
-      scripts: {
-        "lint-staged": "lint-staged",
-        eslint: "eslint --ext .js src/",
-        commit: "git-cz"
-      },
       config: {
         commitizen: {
           path: "node_modules/cz-customizable"
         }
+      },
+      "lint-staged": {
+        "*.{json,css,less,md,wxss,wxml}": ["prettier --write"],
+        "**/*.less": "stylelint '**/*.less' --fix",
+        "**/*.js": ["prettier --write", "npm run lint-staged:js"]
       },
       husky: {
         hooks: {
@@ -258,7 +258,7 @@ function run(
         "init.js"
       );
       const init = require(scriptsPath);
-      init(root, appName, verbose, originalDirectory, templateName);
+      init(root, appName, verbose, originalDirectory, templateName, answer);
     });
 }
 

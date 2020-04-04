@@ -1,11 +1,7 @@
 module.exports = {
   extends: 'eslint-config-imweb',
   rules: {
-    'import/extensions': {
-      svg: 'always',
-      js: 'never',
-      json: 'never',
-    },
+    'import/extensions': 0,
     'import/prefer-default-export': 0,
     'linebreak-style': 0,
     'no-console': 0,
