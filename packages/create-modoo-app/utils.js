@@ -7,12 +7,13 @@ const FRAMEWORK_CONFIG_JSON = {
       scripts: {
         "build:gulp": "gulp dev",
         start: "cross-env NODE_ENV=development npm run build:gulp",
-        build: "cross-env NODE_ENV=production gulp build"
+        build: "cross-env NODE_ENV=production gulp build",
+        "lint-staged": "eslint --ext .js /src"
       },
       "lint-staged": {
         "*.{json,css,less,md,wxss,wxml}": ["prettier --write", "git add"],
         "**/*.less": "stylelint '**/*.less' --fix",
-        "**/*.js": ["prettier --write", "npm run eslint", "git add"]
+        "**/*.js": ["prettier --write", "npm run lint-staged", "git add"]
       }
     },
     installPackage: "@modoo/modoo-script",
@@ -24,7 +25,6 @@ const FRAMEWORK_CONFIG_JSON = {
       "cz-customizable",
       "husky",
       "lint-staged",
-      "prettier",
       "prettier"
     ],
     devDependencies: [

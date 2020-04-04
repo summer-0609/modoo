@@ -1,0 +1,15 @@
+{
+  "extends": ["stylelint-config-standard", "stylelint-config-prettier"],
+  "rules": {
+    "no-descending-specificity": null,
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": ["global"]
+      }
+    ],
+    "selector-type-no-unknown": null,
+    "selector-pseudo-element-colon-notation": "single",
+    "font-family-no-missing-generic-family-keyword": null
+  }
+}

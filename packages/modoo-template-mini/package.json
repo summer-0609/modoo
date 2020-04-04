@@ -1,81 +1,27 @@
 {
   "name": "@modoo/modoo-template-mini",
-  "version": "0.1.8",
-  "description": "摩都娱购电商平台小程序模版",
-  "main": "project.config.json",
+  "version": "1.0.0",
+  "keywords": [
+    "mini",
+    "create-modoo-app",
+    "template"
+  ],
+  "main": "template.json",
+  "author": "xtmike008@gmail.com",
+  "description": "The base template for Create Modoo App.",
   "scripts": {
-    "build:gulp": "gulp dev",
-    "start": "cross-env NODE_ENV=development npm run build:gulp",
-    "build": "cross-env NODE_ENV=production gulp build",
-    "lint-staged": "lint-staged",
-    "eslint": "eslint --ext .js src/",
-    "commit": "git-cz"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Hyattria/modoo.git"
+    "url": "https://github.com/Hyattria/modoo.git",
+    "directory": "packages/modoo-template-mini"
   },
-  "config": {
-    "commitizen": {
-      "path": "node_modules/cz-customizable"
-    }
-  },
-  "lint-staged": {
-    "*.{json,css,less,md,wxss,wxml}": [
-      "prettier --write",
-      "git add"
-    ],
-    "**/*.less": "stylelint '**/*.less' --fix",
-    "**/*.js": [
-      "prettier --write",
-      "npm run eslint",
-      "git add"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint-staged",
-      "commit-msg": "commitlint -e $GIT_PARAMS"
-    }
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@commitlint/cli": "^8.3.5",
-    "@commitlint/config-conventional": "^8.3.4",
-    "autoprefixer": "^9.7.5",
-    "babel-eslint": "^10.0.1",
-    "chalk": "^3.0.0",
-    "commitizen": "^4.0.3",
-    "cross-env": "^7.0.2",
-    "cz-conventional-changelog": "^3.1.0",
-    "cz-customizable": "^6.2.0",
-    "del": "^5.1.0",
-    "eslint": "^5.7.0",
-    "eslint-config-imweb": "^0.2.11",
-    "gulp": "^4.0.2",
-    "gulp-cache": "^1.1.3",
-    "gulp-htmlmin": "^5.0.1",
-    "gulp-jsonminify2": "^1.0.2",
-    "gulp-less": "^4.0.1",
-    "gulp-postcss": "^8.0.0",
-    "gulp-purifycss": "^0.2.0",
-    "gulp-rename": "^2.0.0",
-    "husky": "^4.2.3",
-    "lint-staged": "9.2.3",
-    "ora": "^4.0.3",
-    "postcss-font-base64": "^1.0.5",
-    "postcss-less": "^3.1.4",
-    "postcss-partial-import": "^4.1.0",
-    "postcss-url": "^8.0.0",
-    "prettier": "^2.0.1",
-    "stylelint": "^13.2.1",
-    "stylelint-config-prettier": "^8.0.1",
-    "stylelint-config-standard": "^20.0.0"
+  "license": "MIT",
+  "engines": {
+    "node": ">=8"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "gitHead": "20b05bde74aa9f746bfa7f478874821291b59645"
+  }
 }

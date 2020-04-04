@@ -11,7 +11,8 @@
   "dependencies": {
     "@modoo/create-modoo-app": "1.0.0",
     "@modoo/modoo-script": "^0.1.17",
-    "@modoo/modoo-template-mini": "0.1.8"
+    "fs-extra": "8.1.0",
+    "react-dev-utils": "^10.2.1"
   },
   "keywords": [],
   "author": "",
