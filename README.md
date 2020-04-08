@@ -16,7 +16,9 @@
 npx @modoo/create-modoo-app new-modoo-app
 ```
 
-![](https://user-gold-cdn.xitu.io/2020/4/8/1715a08df132ae5d?w=600&h=453&f=gif&s=2968141)
+<p align='center'>
+<img src='https://user-gold-cdn.xitu.io/2020/4/8/1715a08df132ae5d?w=600&h=453&f=gif&s=2968141' width='600' alt='npm start'>
+</p>
 
 ## install
 
