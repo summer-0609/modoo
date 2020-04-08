@@ -20,7 +20,7 @@ const {
   choosePort,
   createCompiler,
   prepareProxy,
-  prepareUrls
+  prepareUrls,
 } = require("react-dev-utils/WebpackDevServerUtils");
 
 const { shouldUseYarn } = require("../utils");
@@ -54,7 +54,7 @@ const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
 const HOST = process.env.HOST || "0.0.0.0";
 
 choosePort(HOST, DEFAULT_PORT)
-  .then(port => {
+  .then((port) => {
     if (port == null) {
       // We have not found a port.
       return;
@@ -75,7 +75,7 @@ choosePort(HOST, DEFAULT_PORT)
       config,
       urls,
       useYarn: shouldUseYarn(),
-      webpack
+      webpack,
     });
 
     // Load proxy config
@@ -94,7 +94,7 @@ choosePort(HOST, DEFAULT_PORT)
     const devServer = new WebpackDevServer(compiler, serverConfig);
 
     // Launch WebpackDevServer.
-    devServer.listen(port, HOST, err => {
+    devServer.listen(port, HOST, (err) => {
       if (err) {
         return console.log(err);
       }
@@ -134,7 +134,7 @@ choosePort(HOST, DEFAULT_PORT)
       process.stdin.resume();
     }
   })
-  .catch(err => {
+  .catch((err) => {
     if (err && err.message) {
       console.log(err.message);
     }

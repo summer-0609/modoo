@@ -105,8 +105,8 @@ module.exports = function (
     appPackage.scripts,
     templateName.split("-").includes("react")
       ? {
-          start: "react-scripts start",
-          build: "react-scripts build",
+          start: "modoo-script start",
+          build: "modoo-script build",
         }
       : {}
   );
