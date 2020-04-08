@@ -16,6 +16,8 @@
 npx @modoo/create-modoo-app new-modoo-app
 ```
 
+![](https://user-gold-cdn.xitu.io/2020/4/8/1715a08df132ae5d?w=600&h=453&f=gif&s=2968141)
+
 ## install
 
 ```
