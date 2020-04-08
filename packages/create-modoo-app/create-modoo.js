@@ -146,7 +146,6 @@ async function createApp(name, verbose, version, useNpm, template) {
       version: "0.1.0",
       description: answer.description,
       private: true,
-      license: "MIT",
       config: {
         commitizen: {
           path: "node_modules/cz-customizable",
@@ -156,12 +155,6 @@ async function createApp(name, verbose, version, useNpm, template) {
         "*.{json,css,less,md,wxss,wxml}": ["prettier --write"],
         "**/*.less": "stylelint '**/*.less' --fix",
         "**/*.js": ["prettier --write", "npm run lint-staged:js"],
-      },
-      husky: {
-        hooks: {
-          "pre-commit": "npm run lint-staged",
-          "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-        },
       },
     },
     defaultPackage(template)

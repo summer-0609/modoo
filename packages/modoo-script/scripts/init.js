@@ -45,6 +45,31 @@ function tryGitInit() {
   }
 }
 
+function tryGitCommit(appPath) {
+  try {
+    execSync("git add -A", { stdio: "ignore" });
+    execSync('git commit -m "Initialize project using Create React App"', {
+      stdio: "ignore",
+    });
+    return true;
+  } catch (e) {
+    // We couldn't commit in already initialized git repo,
+    // maybe the commit author config is not set.
+    // In the future, we might supply our own committer
+    // like Ember CLI does, but for now, let's just
+    // remove the Git files to avoid a half-done state.
+    console.warn("Git commit not created", e);
+    console.warn("Removing .git directory...");
+    try {
+      // unlinkSync() doesn't work on directories.
+      fs.removeSync(path.join(appPath, ".git"));
+    } catch (removeErr) {
+      // Ignore.
+    }
+    return false;
+  }
+}
+
 module.exports = function (
   appPath,
   appName,
@@ -97,10 +122,12 @@ module.exports = function (
     );
   }
 
-  fs.writeFileSync(
-    path.join(appPath, "package.json"),
-    JSON.stringify(appPackage, null, 2) + os.EOL
-  );
+  // Setup the eslint config
+  if (templateName.split("-").includes("react")) {
+    appPackage.eslintConfig = {
+      extends: "react-app",
+    };
+  }
 
   const readmeExists = fs.existsSync(path.join(appPath, "README.md"));
   if (readmeExists) {
@@ -168,10 +195,10 @@ module.exports = function (
   }
 
   // Initialize git repo
-  // let initializedGit = false;
+  let initializedGit = false;
 
   if (tryGitInit()) {
-    // initializedGit = true;
+    initializedGit = true;
     console.log();
     console.log("Initialized a git repository.");
   }
@@ -203,10 +230,23 @@ module.exports = function (
   }
 
   // Create git commit if git repo was initialized
-  // if (initializedGit && tryGitCommit(appPath)) {
-  //   console.log();
-  //   console.log("Created git commit.");
-  // }
+  if (initializedGit && tryGitCommit(appPath)) {
+    console.log();
+    console.log("Created git commit.");
+  }
+
+  // Setup commitlint husky after initial initialize commit
+  appPackage.husky = {
+    hooks: {
+      "pre-commit": "npm run lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+    },
+  };
+
+  fs.writeFileSync(
+    path.join(appPath, "package.json"),
+    JSON.stringify(appPackage, null, 2) + os.EOL
+  );
 
   let cdpath;
   if (originalDirectory && path.join(originalDirectory, appName) === appPath) {

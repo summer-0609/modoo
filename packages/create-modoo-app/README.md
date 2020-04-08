@@ -1,4 +1,4 @@
-# @mogul/create-mogul-app
+# @modoo/create-modoo-app
 
 ### Usage
 

@@ -1,5 +1,7 @@
 # @modoo/modoo-script 统一构建工具
 
+create-modoo-app scripts base on CRA
+
 摩都娱购电商平台前端团队
 
 ## install
