@@ -21,7 +21,7 @@ const {
   shouldUseYarn,
   getInstallPackage,
   getTemplateInstallPackage,
-  checkThatNpmCanReadCwd
+  checkThatNpmCanReadCwd,
 } = require("./utils");
 
 let projectName;
@@ -30,7 +30,7 @@ program
   .version(packageJson.version)
   .arguments("<project-directory>")
   .usage(`${chalk.green("<project-directory>")} [options]`)
-  .action(name => {
+  .action((name) => {
     projectName = name;
   })
   .option("--verbose", "print additional logs")
@@ -87,11 +87,11 @@ if (program.info) {
         Binaries: ["Node", "npm", "Yarn"],
         Browsers: ["Chrome", "Edge", "Internet Explorer", "Firefox", "Safari"],
         npmPackages: ["react", "react-dom", "react-scripts"],
-        npmGlobalPackages: ["create-react-app"]
+        npmGlobalPackages: ["create-react-app"],
       },
       {
         duplicates: true,
-        showNotFound: true
+        showNotFound: true,
       }
     )
     .then(console.log);
@@ -149,20 +149,20 @@ async function createApp(name, verbose, version, useNpm, template) {
       license: "MIT",
       config: {
         commitizen: {
-          path: "node_modules/cz-customizable"
-        }
+          path: "node_modules/cz-customizable",
+        },
       },
       "lint-staged": {
         "*.{json,css,less,md,wxss,wxml}": ["prettier --write"],
         "**/*.less": "stylelint '**/*.less' --fix",
-        "**/*.js": ["prettier --write", "npm run lint-staged:js"]
+        "**/*.js": ["prettier --write", "npm run lint-staged:js"],
       },
       husky: {
         hooks: {
           "pre-commit": "npm run lint-staged",
-          "commit-msg": "commitlint -e $GIT_PARAMS"
-        }
-      }
+          "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+        },
+      },
     },
     defaultPackage(template)
   );
@@ -210,16 +210,16 @@ function run(
     ...devDependencies(template),
     ...prettierLintDependencies(template),
     packageToInstall,
-    templateToInstall
+    templateToInstall,
   ].filter(Boolean);
 
   console.log("Installing packages. This might take a couple of minutes.");
 
   checkIfOnline(useYarn)
-    .then(isOnline => ({
+    .then((isOnline) => ({
       isOnline,
       packageInfo: packageToInstall,
-      templateInfo: templateToInstall
+      templateInfo: templateToInstall,
     }))
     .then(({ isOnline, packageInfo, templateInfo }) => {
       console.log();
@@ -230,17 +230,17 @@ function run(
       );
       console.log();
       dependencies(template).length &&
-        dependencies(template).forEach(dep => {
+        dependencies(template).forEach((dep) => {
           console.log(`*  ${chalk.cyan(dep)}`);
         });
 
       console.log("devDependencies");
-      devDependencies(template).forEach(dep => {
+      devDependencies(template).forEach((dep) => {
         console.log(`*  ${chalk.cyan(dep)}`);
       });
 
       console.log("Prettier dependencies");
-      prettierLintDependencies(template).forEach(dep =>
+      prettierLintDependencies(template).forEach((dep) =>
         console.log(`*  ${chalk.cyan(dep)}`)
       );
       console.log();
@@ -314,7 +314,7 @@ function install(
         "--save",
         "--save-exact",
         "--loglevel",
-        "error"
+        "error",
       ].concat(dependencies);
 
       argsDev = [
@@ -322,7 +322,7 @@ function install(
         "--save-dev",
         "--save-exact",
         "--loglevel",
-        "error"
+        "error",
       ].concat(devDependencies);
     }
     if (verbose) {
@@ -332,10 +332,10 @@ function install(
 
     dependencies.length && spawn.sync(command, args, { stdio: "inherit" });
     const child = spawn(command, argsDev, { stdio: "inherit" });
-    child.on("close", code => {
+    child.on("close", (code) => {
       if (code !== 0) {
         reject({
-          command: `${command} ${args.join(" ")}`
+          command: `${command} ${args.join(" ")}`,
         });
         return;
       }
@@ -356,8 +356,8 @@ function checkAppName(appName) {
     );
     [
       ...(validationResult.errors || []),
-      ...(validationResult.warnings || [])
-    ].forEach(error => {
+      ...(validationResult.warnings || []),
+    ].forEach((error) => {
       console.error(chalk.red(`  * ${error}`));
     });
     console.error(chalk.red("\nPlease choose a different project name."));
@@ -374,7 +374,7 @@ function checkAppName(appName) {
         )} because a dependency with the same name exists.\n` +
           `Due to the way npm works, the following names are not allowed:\n\n`
       ) +
-        chalk.cyan(dependencies.map(depName => `  ${depName}`).join("\n")) +
+        chalk.cyan(dependencies.map((depName) => `  ${depName}`).join("\n")) +
         chalk.red("\n\nPlease choose a different project name.")
     );
     process.exit(1);
@@ -425,21 +425,22 @@ function isSafeToCreateProjectIn(root, name) {
     "docs",
     ".travis.yml",
     ".gitlab-ci.yml",
-    ".gitattributes"
+    ".gitattributes",
   ];
 
   const errorLogFilePatterns = [
     "npm-debug.log",
     "yarn-error.log",
-    "yarn-debug.log"
+    "yarn-debug.log",
   ];
 
   const conflicts = fs
     .readdirSync(root)
-    .filter(file => !validFiles.includes(file))
+    .filter((file) => !validFiles.includes(file))
     // Don't treat log files from previous installation as conflicts
     .filter(
-      file => !errorLogFilePatterns.some(pattern => file.indexOf(pattern) === 0)
+      (file) =>
+        !errorLogFilePatterns.some((pattern) => file.indexOf(pattern) === 0)
     );
 
   if (conflicts.length > 0) {
@@ -460,8 +461,8 @@ function isSafeToCreateProjectIn(root, name) {
 
   // Remove any remnant files from a previous installation
   const currentFiles = fs.readdirSync(path.join(root));
-  currentFiles.forEach(file => {
-    errorLogFilePatterns.forEach(errorLogFilePattern => {
+  currentFiles.forEach((file) => {
+    errorLogFilePatterns.forEach((errorLogFilePattern) => {
       // This will catch `(npm-debug|yarn-error|yarn-debug).log*` files
       if (file.indexOf(errorLogFilePattern) === 0) {
         fs.removeSync(path.join(root, file));
@@ -477,13 +478,13 @@ function checkIfOnline(useYarn) {
     // We'll just assume the best case.
     return Promise.resolve(true);
   }
-  return new Promise(resolve => {
-    dns.lookup("registry.yarnpkg.com", err => {
+  return new Promise((resolve) => {
+    dns.lookup("registry.yarnpkg.com", (err) => {
       let proxy;
       if (err != null && (proxy = getProxy())) {
         // If a proxy is defined, we likely can't resolve external hostnames.
         // Try to resolve the proxy name as an indication of a connection.
-        dns.lookup(url.parse(proxy).hostname, proxyErr => {
+        dns.lookup(url.parse(proxy).hostname, (proxyErr) => {
           resolve(proxyErr == null);
         });
       } else {

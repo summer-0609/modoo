@@ -1,6 +1,6 @@
 "use strict";
 
-process.on("unhandledRejection", err => {
+process.on("unhandledRejection", (err) => {
   throw err;
 });
 
@@ -45,34 +45,6 @@ function tryGitInit() {
   }
 }
 
-function tryGitCommit(appPath) {
-  try {
-    execSync("git add -A", { stdio: "ignore" });
-    execSync(
-      'git commit -m "Initialize project using @modoo/create-modoo-app"',
-      {
-        stdio: "ignore"
-      }
-    );
-    return true;
-  } catch (e) {
-    // We couldn't commit in already initialized git repo,
-    // maybe the commit author config is not set.
-    // In the future, we might supply our own committer
-    // like Ember CLI does, but for now, let's just
-    // remove the Git files to avoid a half-done state.
-    console.warn("Git commit not created", e);
-    console.warn("Removing .git directory...");
-    try {
-      // unlinkSync() doesn't work on directories.
-      fs.removeSync(path.join(appPath, ".git"));
-    } catch (removeErr) {
-      // Ignore.
-    }
-    return false;
-  }
-}
-
 module.exports = function (
   appPath,
   appName,
@@ -109,7 +81,7 @@ module.exports = function (
     templateName.split("-").includes("react")
       ? {
           start: "react-scripts start",
-          build: "react-scripts build"
+          build: "react-scripts build",
         }
       : {}
   );
@@ -119,7 +91,7 @@ module.exports = function (
     appPackage.scripts = Object.entries(appPackage.scripts).reduce(
       (acc, [key, value]) => ({
         ...acc,
-        [key]: value.replace(/(npm run |npm )/, "yarn ")
+        [key]: value.replace(/(npm run |npm )/, "yarn "),
       }),
       {}
     );
@@ -152,7 +124,7 @@ module.exports = function (
           Object.assign(require(path.join(appPath, "project.config.json")), {
             projectname: appName,
             description,
-            api
+            api,
           }),
           null,
           2
@@ -215,7 +187,7 @@ module.exports = function (
   } else {
     command = "npm";
     remove = "uninstall";
-    args = ["install", "--save", verbose && "--verbose"].filter(e => e);
+    args = ["install", "--save", verbose && "--verbose"].filter((e) => e);
   }
 
   // Remove template
@@ -223,7 +195,7 @@ module.exports = function (
   console.log();
 
   const proc = spawn.sync(command, [remove, templateName], {
-    stdio: "inherit"
+    stdio: "inherit",
   });
   if (proc.status !== 0) {
     console.error(`\`${command} ${args.join(" ")}\` failed`);
@@ -272,6 +244,6 @@ module.exports = function (
   }
   console.log();
   console.log(
-    chalk.cyan(`摩都娱购电商平台开发部出品 version:${scriptVersion}`)
+    chalk.cyan(`摩都娱购电商平台开发部出品 version: ${scriptVersion}`)
   );
 };

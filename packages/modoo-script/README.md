@@ -1,15 +1,21 @@
-# @modoo/modoo-script
+# @modoo/modoo-script 统一构建工具
 
-摩都娱购电商平台前端团队 NODE CLI
+摩都娱购电商平台前端团队
 
 ## install
 
-```
-yarn global add @modoo/modoo-script
+```bash
+yarn add @modoo/modoo-script --dev
 ```
 
-## init
+## start
 
 ```bash
-modoo-script init [projectName]
+modoo-script start
+```
+
+## build
+
+```bash
+modoo-script build
 ```

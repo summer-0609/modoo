@@ -12,20 +12,18 @@
 
 > 摩都娱购电商平台前端团队 `monorepo` 项目
 
-# @modoo/script
-
 > 摩都娱购电商平台 统一构建 Node CLI
+
+## create
+
+```bash
+npx @modoo/create-modoo-app new-modoo-app
+```
 
 ## install
 
 ```
-yarn global @modoo/modoo-script
-```
-
-## init
-
-```bash
-modoo-script init [projectName]
+yarn add @modoo/modoo-script --dev
 ```
 
 # @modoo/modoo-template-mini
@@ -42,4 +40,20 @@ yarn start
 
 ```bash
 yarn build
+```
+
+# @modoo/modoo-template-react
+
+> 摩都娱购电商平台 React 后台模版
+
+## dev
+
+```bash
+modoo-script start
+```
+
+## build
+
+```bash
+modoo-script build
 ```
