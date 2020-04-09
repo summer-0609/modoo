@@ -5,13 +5,13 @@ const FRAMEWORK_CONFIG_JSON = {
   mini: {
     packageJson: {
       scripts: {
-        "build:gulp": "gulp dev",
-        start: "cross-env NODE_ENV=development npm run build:gulp",
+        "gulp:dev": "gulp dev",
+        start: "cross-env NODE_ENV=development yarn gulp:dev",
         build: "cross-env NODE_ENV=production gulp build",
         "lint-staged": "lint-staged",
         "lint-staged:js": "eslint --ext .js src/",
-        commit: "git-cz"
-      }
+        commit: "git-cz",
+      },
     },
     installPackage: "@modoo/modoo-script",
     template: "@modoo/modoo-template-mini",
@@ -22,7 +22,7 @@ const FRAMEWORK_CONFIG_JSON = {
       "cz-customizable",
       "husky",
       "lint-staged",
-      "prettier"
+      "prettier",
     ],
     devDependencies: [
       "autoprefixer",
@@ -48,16 +48,16 @@ const FRAMEWORK_CONFIG_JSON = {
       "postcss-url",
       "stylelint",
       "stylelint-config-prettier",
-      "stylelint-config-standard"
-    ]
+      "stylelint-config-standard",
+    ],
   },
   react: {
     packageJson: {
       scripts: {
         "lint-staged": "lint-staged",
         "lint-staged:js": "eslint --ext .js src/",
-        commit: "git-cz"
-      }
+        commit: "git-cz",
+      },
     },
     installPackage: "@modoo/modoo-script",
     template: "@modoo/modoo-template-react",
@@ -68,10 +68,10 @@ const FRAMEWORK_CONFIG_JSON = {
       "cz-customizable",
       "husky",
       "lint-staged",
-      "prettier"
+      "prettier",
     ],
-    dependencies: ["react", "react-dom", "dva", "antd"]
-  }
+    dependencies: ["react", "react-dom", "dva", "antd"],
+  },
 };
 
 function prompt({ template }) {
@@ -84,19 +84,19 @@ function prompt({ template }) {
       choices: [
         {
           name: "React",
-          value: "react"
+          value: "react",
         },
         {
           name: "原生微信小程序",
-          value: "mini"
-        }
+          value: "mini",
+        },
       ],
-      when: () => !template
+      when: () => !template,
     },
     {
       type: "input",
       name: "description",
-      message: "Please enter the project description: "
+      message: "Please enter the project description: ",
     },
     {
       type: "input",
@@ -110,11 +110,11 @@ function prompt({ template }) {
       },
       when(answer) {
         return (answer.template || template) === "mini";
-      }
-    }
+      },
+    },
   ];
-  return new Promise(resolve => {
-    inquirer.prompt(promptList).then(answer => {
+  return new Promise((resolve) => {
+    inquirer.prompt(promptList).then((answer) => {
       resolve(answer);
     });
   });
@@ -177,7 +177,7 @@ function checkThatNpmCanReadCwd() {
   // "; cwd = C:\path\to\current\dir" (unquoted)
   // I couldn't find an easier way to get it.
   const prefix = "; cwd = ";
-  const line = lines.find(line => line.startsWith(prefix));
+  const line = lines.find((line) => line.startsWith(prefix));
   if (typeof line !== "string") {
     // Fail gracefully. They could remove it.
     return true;
@@ -223,5 +223,5 @@ module.exports = {
   getInstallPackage,
   getTemplateInstallPackage,
   shouldUseYarn,
-  checkThatNpmCanReadCwd
+  checkThatNpmCanReadCwd,
 };

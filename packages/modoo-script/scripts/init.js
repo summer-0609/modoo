@@ -143,7 +143,7 @@ module.exports = function (
     fs.copySync(templateDir, appPath);
 
     if (templateName.split("-").includes("mini")) {
-      const { description, api } = answer;
+      const { description, appId } = answer;
 
       fs.writeFile(
         path.join(appPath, "project.config.json"),
@@ -151,7 +151,7 @@ module.exports = function (
           Object.assign(require(path.join(appPath, "project.config.json")), {
             projectname: appName,
             description,
-            api,
+            appid: appId,
           }),
           null,
           2

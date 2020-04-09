@@ -1,6 +1,6 @@
 {
   "description": "@{Description}",
-  "miniprogramRoot": "miniprogram/",
+  "miniprogramRoot": "dist/",
   "packOptions": {
     "ignore": []
   },
