@@ -1,4 +1,11 @@
-# MODOO
+<p align='center'>
+<img src='./public/logo.png' height="200" width="200" alt="modoo logo">
+</p>
+
+<h1 align="center">Modoo Architecture</h1>
+<div align="center">
+
+摩都娱购电商平台前端团队工程化 `monorepo` 项目
 
 ![npm](https://img.shields.io/npm/v/@modoo/modoo-script)
 ![npm](https://img.shields.io/npm/dt/@modoo/modoo-script)
@@ -8,9 +15,9 @@
 ![Libraries.io dependency status for latest release, scoped npm package](https://img.shields.io/librariesio/release/npm/@modoo/modoo-script)
 [![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
 
-> 摩都娱购电商平台前端团队工程化 `monorepo` 项目
+</div>
 
-## create
+## 📦 Init App
 
 ```bash
 npx @modoo/create-modoo-app new-modoo-app
@@ -20,39 +27,35 @@ npx @modoo/create-modoo-app new-modoo-app
 <img src='https://user-gold-cdn.xitu.io/2020/4/8/1715a08df132ae5d?w=600&h=453&f=gif&s=2968141' width='600' alt='npm start'>
 </p>
 
-## install
+## 🔨 Usage
 
-```
-yarn add @modoo/modoo-script --dev
-```
-
-# @modoo/modoo-template-mini
+## @modoo/modoo-template-mini
 
 > 摩都娱购电商平台小程序模版
 
-## dev
+### dev
 
 ```bash
 yarn start
 ```
 
-## build
+### build
 
 ```bash
 yarn build
 ```
 
-# @modoo/modoo-template-react
+## @modoo/modoo-template-react
 
 > 摩都娱购电商平台 React 后台模版
 
-## dev
+### dev
 
 ```bash
 modoo-script start
 ```
 
-## build
+### build
 
 ```bash
 modoo-script build
