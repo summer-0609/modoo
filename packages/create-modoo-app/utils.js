@@ -70,7 +70,14 @@ const FRAMEWORK_CONFIG_JSON = {
       "lint-staged",
       "prettier",
     ],
-    dependencies: ["react", "react-dom", "dva", "antd"],
+    dependencies: [
+      "react",
+      "react-dom",
+      "react-loadable",
+      "dva",
+      "antd",
+      "styled-components",
+    ],
   },
 };
 
